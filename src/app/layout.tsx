@@ -20,7 +20,7 @@ export default function RootLayout({ children }: any) {
     <html lang="ru" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased ",
           fontSans.variable
         )}
       >
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: any) {
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <div className="m-6">{children}</div>
         </ThemeProvider>
       </body>
     </html>
