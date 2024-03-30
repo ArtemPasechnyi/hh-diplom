@@ -1,5 +1,9 @@
 import Profile from "@/pages/Profile/ui/Profile";
 
-export default function ProfilePage() {
-  return <Profile />;
+interface ProfileProps {
+  data: any;
+}
+
+export default function ProfilePage({ data }: ProfileProps) {
+  return <Profile data={data} />;
 }
