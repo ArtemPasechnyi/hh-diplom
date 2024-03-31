@@ -11,8 +11,8 @@ const fontSans = SourceCodePro({
 });
 
 export const metadata: Metadata = {
-  title: "GymBro",
-  description: "For gym's bro",
+  title: "HH analitics",
+  description: "Diplom work",
 };
 
 export default function RootLayout({ children }: any) {
