@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import logo from "/src/public/icons/logo.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AuthModal } from "../Auth/ui/AuthModal";
 
 export const Header = () => {
   return (
@@ -13,6 +14,7 @@ export const Header = () => {
       </Link>
       <div className="flex items-center justify-between gap-4">
         <ModeToggle />
+        <AuthModal />
         <Link href="/profile">
           <Avatar>
             {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
