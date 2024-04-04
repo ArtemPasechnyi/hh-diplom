@@ -1,4 +1,4 @@
-import { VacanciesList } from "@/pages/Vacancies/ui/VacanciesList";
+import VacanciesList from "@/pages/Vacancies/ui/VacanciesList";
 
 export default function VacanciesPage() {
   return <VacanciesList />;

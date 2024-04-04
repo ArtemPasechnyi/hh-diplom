@@ -8,7 +8,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import VacancyCard from "../widgest/VacancyCard/ui/VacancyCard";
 import styles from "./VacanciesList.module.css";
 
-export const VacanciesList = () => {
+const VacanciesList = () => {
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
@@ -131,3 +131,5 @@ export const VacanciesList = () => {
     </div>
   );
 };
+
+export default VacanciesList;
