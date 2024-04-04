@@ -11,7 +11,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { IVacancyCard } from "../model/interfaces";
 
-export const VacancyCard: FC<IVacancyCard> = (props) => {
+const VacancyCard: FC<IVacancyCard> = (props) => {
   const { dataItem = {} } = props;
   const {
     name,
@@ -81,3 +81,5 @@ export const VacancyCard: FC<IVacancyCard> = (props) => {
     </Card>
   );
 };
+
+export default VacancyCard;
