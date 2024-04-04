@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 import { FC } from "react";
 import { ModalContainerProps } from "../model/interfaces";
 
@@ -22,6 +23,8 @@ export const ModalContainer: FC<ModalContainerProps> = (props) => {
     onSubmitClick,
     declineButton,
   } = props;
+
+  const { submitText, link } = submitButton ?? {};
 
   const { text, variant = "default", size = "sm" } = openButton;
 
@@ -51,14 +54,22 @@ export const ModalContainer: FC<ModalContainerProps> = (props) => {
 
         {!!submitButton && (
           <DialogFooter>
+            {link ? (
+              <Link href={link}>
+                <Button type="submit" size={"sm"} onClick={onSubmitClick}>
+                  {submitText}
+                </Button>
+              </Link>
+            ) : (
+              <Button type="submit" size={"sm"} onClick={onSubmitClick}>
+                {submitText}
+              </Button>
+            )}
             {!!declineButton && (
               <Button type="submit" size={"sm"} onClick={handleClose}>
                 {declineButton}
               </Button>
             )}
-            <Button type="submit" size={"sm"} onClick={onSubmitClick}>
-              {submitButton}
-            </Button>
           </DialogFooter>
         )}
       </DialogContent>

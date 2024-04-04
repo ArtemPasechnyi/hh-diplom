@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
 import { Source_Code_Pro as SourceCodePro } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/widgets/header/ui/Header";
+import Main from "@/pages/Main/ui/Main";
 
 const fontSans = SourceCodePro({
   subsets: ["latin"],
@@ -30,8 +30,7 @@ export default function RootLayout({ children }: any) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <div className="m-4">{children}</div>
+          <Main>{children}</Main>
         </ThemeProvider>
       </body>
     </html>

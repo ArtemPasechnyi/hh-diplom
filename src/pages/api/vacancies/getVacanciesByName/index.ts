@@ -42,7 +42,7 @@ handler.get(async (req, res) => {
     vacancies.push(...items);
   }
 
-  res.json(vacancies);
+  res.json({ vacancies, name });
 });
 
 export default handler;
