@@ -30,10 +30,10 @@ export const VacancyCard: FC<IVacancyCard> = (props) => {
   //   const { from, to, currency } = salary;
 
   return (
-    <Card className="max-w-3xl">
+    <Card className="max-w-2xl">
       <CardHeader>
         <CardTitle>
-          <Link href={alternate_url}>
+          <Link href={alternate_url.toString()}>
             <div className="no-underline hover:underline decoration-3">
               {name}
             </div>
@@ -49,11 +49,17 @@ export const VacancyCard: FC<IVacancyCard> = (props) => {
         )}
         <p className="flex flex-row items-center gap-4">
           <span className="font-bold">Компания:</span>{" "}
-          <Link href={employerUrl}>
+          {!!employerUrl ? (
+            <Link href={employerUrl?.toString()}>
+              <div className="no-underline hover:underline decoration-1">
+                {employerName}
+              </div>
+            </Link>
+          ) : (
             <div className="no-underline hover:underline decoration-1">
               {employerName}
             </div>
-          </Link>
+          )}
         </p>
         <p>
           <span className="font-bold">Тип занятости:</span> {employmentName}
@@ -68,7 +74,7 @@ export const VacancyCard: FC<IVacancyCard> = (props) => {
       </CardContent>
 
       <CardFooter>
-        <Link href={alternate_url}>
+        <Link href={alternate_url.toString()}>
           <Button>Подробная информация</Button>
         </Link>
       </CardFooter>

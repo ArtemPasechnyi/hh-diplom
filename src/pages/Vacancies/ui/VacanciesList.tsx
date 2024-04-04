@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useState, useEffect, useRef, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { VacancyCard } from "../widgest/VacancyCard/ui/VacancyCard";
 import styles from "./VacanciesList.module.css";
 
@@ -14,15 +14,42 @@ export const VacanciesList = () => {
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
+  const [queryText, setQueryText] = useState<string>("");
 
   const ReturnWord = () => {
     switch (true) {
       case isLoading && !buttonClicked: {
-        return <div>Начни поиск</div>;
+        return (
+          <div className="flex flex-1 items-center justify-center rounded-lg">
+            <div className="flex flex-col items-center gap-1 text-center">
+              <div className="motivational-text max-w-md mx-auto p-6">
+                <h2 className="text-2xl font-bold mb-4">
+                  Начните поиск для анализа рынка
+                </h2>
+
+                <p className="text-sm text-muted-foreground">
+                  Развивайтесь и продвигайтесь вперед, каждый шаг приближает вас
+                  к цели!
+                </p>
+              </div>
+            </div>
+          </div>
+        );
       }
 
       case isLoading && buttonClicked: {
-        return <div>Поиск...</div>;
+        return (
+          <div className="flex items-center justify-center">
+            <div
+              className="inline-block h-16 w-16 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+              role="status"
+            >
+              <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                Loading...
+              </span>
+            </div>
+          </div>
+        );
       }
 
       default: {
@@ -52,11 +79,12 @@ export const VacanciesList = () => {
 
       searchParams.set("name", JSON.stringify(name));
 
-      const result = await fetch(
+      const { vacancies, name: queryText } = await fetch(
         `api/vacancies/getVacanciesByName?${searchParams.toString()}`
       ).then((res) => res.json());
 
-      setData(result);
+      setData(vacancies);
+      setQueryText(queryText);
 
       setIsLoading(false);
     };
@@ -85,10 +113,21 @@ export const VacanciesList = () => {
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
       </div>
-      <ReturnWord />
-      {data.map((dataItem: any, index: any) => {
-        return <VacancyCard dataItem={dataItem} key={index} />;
-      })}
+
+      {!!data.length ? (
+        <div className="flex flex-col gap-6">
+          <div>
+            {data.length} {queryText}
+          </div>
+          <div className="h-calc-screen overflow-y-scroll flex flex-col gap-6">
+            {data.map((dataItem: any, index: any) => {
+              return <VacancyCard dataItem={dataItem} key={index} />;
+            })}
+          </div>
+        </div>
+      ) : (
+        <ReturnWord />
+      )}
     </div>
   );
 };
