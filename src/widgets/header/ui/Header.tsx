@@ -1,8 +1,8 @@
 import { ModeToggle } from "@/shared/ModeToggle/ui/ModeToggle";
 import Link from "next/link";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { AuthModal } from "../features/Auth/ui/AuthModal";
 
 export const Header = () => {
   return (
@@ -20,11 +20,21 @@ export const Header = () => {
       <div className="flex items-center justify-between gap-4">
         <ModeToggle />
 
-        <Link href="/">
-          <Avatar>
-            <AvatarFallback>AP</AvatarFallback>
-          </Avatar>
-        </Link>
+        {/* {token ? (
+          <div className="flex flex-row gap-2 items-center">
+            <div>{username}</div>
+            <Image
+              src={avatarUrl}
+              alt="avatar"
+              width="48"
+              height="48"
+              className="rounded-lg"
+            />
+          </div>
+        ) : (
+          <AuthModal />
+        )} */}
+        <AuthModal />
       </div>
     </div>
   );
