@@ -9,7 +9,7 @@ import {
 import dayjs from "dayjs";
 import Link from "next/link";
 import { FC } from "react";
-import { IVacancyCard } from "../model/interfaces";
+import IVacancyCard from "../model/interfaces";
 
 const VacancyCard: FC<IVacancyCard> = (props) => {
   const { dataItem = {} } = props;

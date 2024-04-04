@@ -1,3 +1,5 @@
-export interface IVacancyCard {
+interface IVacancyCard {
   dataItem: any;
 }
+
+export default IVacancyCard;

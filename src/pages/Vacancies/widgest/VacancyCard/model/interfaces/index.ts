@@ -1,3 +1,3 @@
-import { IVacancyCard } from "./vacancy";
+import IVacancyCard from "./vacancy";
 
-export type { IVacancyCard };
+export default IVacancyCard;
