@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { useState, useEffect, ChangeEvent } from "react";
-import VacancyCard from "../widgest/VacancyCard/ui/VacancyCard";
+import VacancyCard from "../../../widgets/VacancyCard/ui/VacancyCard";
 import styles from "./VacanciesList.module.css";
 
 const VacanciesList = () => {
