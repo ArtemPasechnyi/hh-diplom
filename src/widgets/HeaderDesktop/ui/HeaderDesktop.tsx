@@ -28,7 +28,7 @@ export const HeaderDesktop = () => {
               className={useIsActivePathname('vacancies') ? ACTIVE : NOT_ACTIVE}
             >
               <ScrollText className="h-4 w-4" />
-              Вакансии desk
+              Вакансии
             </Link>
 
             <Link
@@ -36,7 +36,7 @@ export const HeaderDesktop = () => {
               className={useIsActivePathname('analytics') ? ACTIVE : NOT_ACTIVE}
             >
               <LineChart className="h-4 w-4" />
-              Аналитика desk
+              Аналитика
             </Link>
           </nav>
         </div>
