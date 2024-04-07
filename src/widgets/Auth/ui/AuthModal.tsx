@@ -1,19 +1,21 @@
-"use client";
+'use client';
 
-import { FC, useState } from "react";
+import { FC, useState } from 'react';
 
-import { cn } from "@/lib/utils";
-import { ModalContainer } from "@/shared/ModalContainer/ui/ModalContainer";
-import { ISubmitButton } from "@/shared/ModalContainer/model/interfaces";
+import { cn } from '@/lib/utils';
+import { ModalContainer } from '@/shared/ModalContainer/ui/ModalContainer';
+import { ISubmitButton } from '@/shared/ModalContainer/model/interfaces';
 
-const title: string = "Подтверждение входа";
+const title: string = 'Подтверждение входа';
+
+const declineButton: string = 'Отмена';
+
+const openButton = { text: 'Вход' };
+
 const submitButton: ISubmitButton = {
-  submitText: "Войти",
-  // link: "http://",
+  submitText: 'Войти',
+  link: `https://hh.ru/oauth/authorize?response_type=code&client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}`,
 };
-const declineButton: string = "Отмена";
-
-const openButton = { text: "Вход" };
 
 export const AuthModal: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,6 +23,7 @@ export const AuthModal: FC = () => {
   const handleSubmitClick = () => {
     setIsOpen(false);
   };
+
   return (
     <ModalContainer
       isOpen={isOpen}
@@ -32,7 +35,7 @@ export const AuthModal: FC = () => {
       declineButton={declineButton}
     >
       <div className="flex flex-col gap-2 my-4">
-        <div className={cn("w-full h-auto")}>
+        <div className={cn('w-full h-auto')}>
           Вход будет осуществлён через сайт hh. Полученные данные будут хранится
           и использоваться только в рамках этого сайта. Авторизуясь, вы
           принимаете условия использования данного веб-сайта.
