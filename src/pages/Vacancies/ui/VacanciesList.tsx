@@ -4,21 +4,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, Key } from "react";
 import VacancyCard from "../../../widgets/VacancyCard/ui/VacancyCard";
 import styles from "./VacanciesList.module.css";
 
 const VacanciesList = () => {
   const [data, setData] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAnalysisLoading, setIsAnalysisLoading] = useState<boolean>(false);
+  const [analysisResult, setAnalysisResult] = useState<any>({});
+
+  const { analysisContent = {} } = analysisResult;
+  const { avgSalary, skills = [], amount = {} } = analysisContent;
+  const { value, valueWithSalary } = amount;
 
   const [name, setName] = useState<string>("");
   const [queryText, setQueryText] = useState<string>("");
 
   const ReturnWord = () => {
     switch (true) {
-      case isLoading && !buttonClicked: {
+      case isLoading: {
         return (
           <div className="flex flex-1 items-center justify-center rounded-lg">
             <div className="flex flex-col items-center gap-1 text-center">
@@ -37,7 +42,7 @@ const VacanciesList = () => {
         );
       }
 
-      case isLoading && buttonClicked: {
+      case isLoading: {
         return (
           <div className="flex items-center justify-center">
             <div
@@ -58,22 +63,16 @@ const VacanciesList = () => {
     }
   };
 
-  const handleSearch = () => {
-    setButtonClicked(true);
-  };
-
   const handleClear = () => {
     setName("");
-    setButtonClicked(false);
   };
 
   const setNameValue = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.currentTarget.value);
-    setButtonClicked(false);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const handleSearch = async () => {
+    const getVacancies = async () => {
       setIsLoading(true);
       const searchParams = new URLSearchParams();
 
@@ -89,8 +88,22 @@ const VacanciesList = () => {
       setIsLoading(false);
     };
 
-    buttonClicked && fetchData();
-  }, [buttonClicked, name]);
+    const getVacanciesAnalysis = async () => {
+      const searchParams = new URLSearchParams();
+
+      searchParams.set("vacancySearchParams", name);
+
+      const result = fetch(
+        `api/vacancies/getVacanciesAnalysis?${searchParams.toString()}`
+      );
+
+      result.then((res) => res.json()).then((data) => setAnalysisResult(data));
+
+      setIsAnalysisLoading(false);
+    };
+
+    await Promise.all([getVacancies(), getVacanciesAnalysis()]);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -108,7 +121,7 @@ const VacanciesList = () => {
         <Button
           size="icon"
           onClick={handleSearch}
-          disabled={buttonClicked || !name}
+          disabled={isLoading || !name}
         >
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
@@ -118,6 +131,18 @@ const VacanciesList = () => {
         <div className="flex flex-col gap-6">
           <div>
             {data.length} {queryText}
+          </div>
+          <div>
+            <div>{`amount: ${value}, valueWithSalary: ${valueWithSalary}`}</div>
+            <div>{`avgSalary: ${avgSalary}`}</div>
+            {skills.map((skill: any, index: Key) => {
+              const { amount, name, percentage } = skill;
+              return (
+                <div key={index}>
+                  {name} - {amount} - {percentage}
+                </div>
+              );
+            })}
           </div>
           <div className="h-calc-screen overflow-y-scroll flex flex-col gap-6">
             {data.map((dataItem: any, index: any) => {
