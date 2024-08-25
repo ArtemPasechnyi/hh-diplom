@@ -39,6 +39,8 @@ handler.get(async (req, res) => {
 
     const { items } = vacanciesResponse;
 
+    
+
     vacancies.push(...items);
   }
 

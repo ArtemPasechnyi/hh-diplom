@@ -85,8 +85,6 @@ handler.get(async (req, res) => {
     vacancies.push(...items);
   }
 
-  console.log(vacancies.length);
-
   vacancies.map((vacancy: { salary: any; snippet: any }) => {
     const { skills, amount } = analysisContent;
 
