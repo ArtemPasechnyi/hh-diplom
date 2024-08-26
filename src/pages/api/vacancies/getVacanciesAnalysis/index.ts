@@ -44,7 +44,9 @@ const perPage = 100;
 handler.get(async (req, res) => {
   const { query } = req;
 
-  const { vacancySearchParams } = query;
+  const { vacancySearchParams, skills: stringSkills } = query;
+
+  const userSkills: string[] = JSON.parse(stringSkills);
 
   const searchParams = new URLSearchParams();
 
@@ -104,7 +106,7 @@ handler.get(async (req, res) => {
 
     const { requirement } = snippet;
 
-    mainSkills.map((mainSkill) => {
+    userSkills.map((mainSkill) => {
       if (!requirement) return;
       if (requirement.toLowerCase().includes(mainSkill)) {
         const currentSkill = skills.find((skill) => skill.name === mainSkill);

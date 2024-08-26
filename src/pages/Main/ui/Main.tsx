@@ -68,13 +68,6 @@ const Main = ({ children }: any) => {
                   <ScrollText className="h-5 w-5" />
                   Вакансии
                 </Link>
-                <Link
-                  href="/analytics"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="h-5 w-5" />
-                  Аналитика
-                </Link>
               </nav>
             </SheetContent>
           </Sheet>

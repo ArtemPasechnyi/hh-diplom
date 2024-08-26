@@ -7,12 +7,17 @@ import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { useState, useEffect, ChangeEvent, Key } from "react";
 import VacancyCard from "../../../widgets/VacancyCard/ui/VacancyCard";
 import styles from "./VacanciesList.module.css";
+import { SkillSetPicker } from "@/components/SkillSet/SkillSetPicker/SkillSetPicker";
+import { useSkillSet } from "@/components/SkillSet/useSkillSet";
+import { SkillSetAdder } from "@/components/SkillSet/SkillSetAdder/SkillSetAdder";
 
 const VacanciesList = () => {
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isAnalysisLoading, setIsAnalysisLoading] = useState<boolean>(false);
   const [analysisResult, setAnalysisResult] = useState<any>({});
+
+  const { skillSet } = useSkillSet();
 
   const { analysisContent = {} } = analysisResult;
   const { avgSalary, skills = [], amount = {} } = analysisContent;
@@ -92,6 +97,7 @@ const VacanciesList = () => {
       const searchParams = new URLSearchParams();
 
       searchParams.set("vacancySearchParams", name);
+      searchParams.set("skills", JSON.stringify(skillSet?.skills));
 
       const result = fetch(
         `api/vacancies/getVacanciesAnalysis?${searchParams.toString()}`
@@ -125,6 +131,10 @@ const VacanciesList = () => {
         >
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
+      </div>
+      <div className="flex gap-4">
+        <SkillSetPicker />
+        <SkillSetAdder />
       </div>
 
       {!!data.length ? (
