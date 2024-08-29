@@ -10,20 +10,7 @@ const Main = ({ children }: any) => {
     const code = urlParams.get('code');
 
     if (code) {
-      const client_id = process.env.NEXT_PUBLIC_CLIENT_ID;
-      const client_secret = process.env.NEXT_PUBLIC_CLIENT_SECRET;
-      fetch(
-        `https://api.hh.ru/token?grant_type=authorization_code&client_id=${client_id}&client_secret=${client_secret}&code=${code}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => console.log('data', data))
-        .catch((error) => console.error('Error:', error));
+      fetch(`api/authorize?${urlParams.toString()}`);
     }
   }, []);
 
