@@ -19,10 +19,8 @@ handler.get(async (req, res) => {
     }
   )
     .then((response) => response.json())
-    .then((data) => console.log('data', data))
+    .then((data) => res.json(data))
     .catch((error) => console.error('Error:', error));
-
-  res.json({});
 });
 
 export default handler;
