@@ -30,14 +30,6 @@ export const HeaderDesktop = () => {
               <ScrollText className="h-4 w-4" />
               Вакансии
             </Link>
-
-            <Link
-              href="/analytics"
-              className={useIsActivePathname('analytics') ? ACTIVE : NOT_ACTIVE}
-            >
-              <LineChart className="h-4 w-4" />
-              Аналитика
-            </Link>
           </nav>
         </div>
       </div>

@@ -49,13 +49,6 @@ export const HeaderMobile = () => {
               <ScrollText className="h-5 w-5" />
               Вакансии
             </div>
-            <div
-              className="mx-[-0.65rem] cursor-pointer  flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              onClick={() => handleClose('/analytics')}
-            >
-              <LineChart className="h-5 w-5" />
-              Аналитика
-            </div>
           </nav>
         </SheetContent>
       </Sheet>

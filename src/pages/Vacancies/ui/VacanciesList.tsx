@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { useState, useEffect, ChangeEvent, Key } from "react";
-import VacancyCard from "../../../widgets/VacancyCard/ui/VacancyCard";
-import styles from "./VacanciesList.module.css";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { MagnifyingGlassIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { useState, useEffect, ChangeEvent, Key } from 'react';
+import VacancyCard from '../../../widgets/VacancyCard/ui/VacancyCard';
+import styles from './VacanciesList.module.css';
+import { Chart } from '@/shared/Chart/Chart';
 
 const VacanciesList = () => {
   const [data, setData] = useState<any>([]);
@@ -18,8 +19,8 @@ const VacanciesList = () => {
   const { avgSalary, skills = [], amount = {} } = analysisContent;
   const { value, valueWithSalary } = amount;
 
-  const [name, setName] = useState<string>("");
-  const [queryText, setQueryText] = useState<string>("");
+  const [name, setName] = useState<string>('');
+  const [queryText, setQueryText] = useState<string>('');
 
   const ReturnWord = () => {
     switch (true) {
@@ -64,7 +65,7 @@ const VacanciesList = () => {
   };
 
   const handleClear = () => {
-    setName("");
+    setName('');
   };
 
   const setNameValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +77,7 @@ const VacanciesList = () => {
       setIsLoading(true);
       const searchParams = new URLSearchParams();
 
-      searchParams.set("name", JSON.stringify(name));
+      searchParams.set('name', JSON.stringify(name));
 
       const { vacancies, name: queryText } = await fetch(
         `api/vacancies/getVacanciesByName?${searchParams.toString()}`
@@ -91,7 +92,7 @@ const VacanciesList = () => {
     const getVacanciesAnalysis = async () => {
       const searchParams = new URLSearchParams();
 
-      searchParams.set("vacancySearchParams", name);
+      searchParams.set('vacancySearchParams', name);
 
       const result = fetch(
         `api/vacancies/getVacanciesAnalysis?${searchParams.toString()}`
@@ -104,6 +105,48 @@ const VacanciesList = () => {
 
     await Promise.all([getVacancies(), getVacanciesAnalysis()]);
   };
+
+  const chartOptions: Highcharts.Options = {
+    chart: {
+      type: 'column',
+    },
+    title: {
+      text: 'Распределение навыков по вакансиям',
+      align: 'left',
+    },
+    xAxis: {
+      categories: [''],
+      title: {
+        text: 'Навыки',
+      },
+      gridLineWidth: 1,
+      lineWidth: 0,
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Присутствие в вакансиях, %',
+      },
+      labels: {
+        overflow: 'justify',
+      },
+      gridLineWidth: 0,
+    },
+    series: [
+      ...skills.map(({ name, percentage }: any) => {
+        return { type: 'column', name, data: [percentage] };
+      }),
+    ],
+    tooltip: {
+      valueSuffix: ' %',
+    },
+  };
+
+  console.log(
+    skills.map(({ name, percentage }: any) => {
+      return { type: 'bar', name, data: [percentage] };
+    })
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -130,19 +173,9 @@ const VacanciesList = () => {
       {!!data.length ? (
         <div className="flex flex-col gap-6">
           <div>
-            {data.length} {queryText}
-          </div>
-          <div>
             <div>{`amount: ${value}, valueWithSalary: ${valueWithSalary}`}</div>
             <div>{`avgSalary: ${avgSalary}`}</div>
-            {skills.map((skill: any, index: Key) => {
-              const { amount, name, percentage } = skill;
-              return (
-                <div key={index}>
-                  {name} - {amount} - {percentage}
-                </div>
-              );
-            })}
+            {skills.length && <Chart options={chartOptions} />}
           </div>
           <div className="h-calc-screen overflow-y-scroll flex flex-col gap-6">
             {data.map((dataItem: any, index: any) => {
