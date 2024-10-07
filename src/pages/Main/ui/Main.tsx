@@ -1,6 +1,7 @@
 'use client';
 
 import { getFromCookie, saveToCookie } from '@/shared/cookieMove';
+import { saveToLocalStorage } from '@/shared/localStorageMove';
 import { HeaderDesktop } from '@/widgets/HeaderDesktop/ui/HeaderDesktop';
 import { HeaderMobile } from '@/widgets/HeaderMobile/ui/HeaderMobile';
 import { useEffect } from 'react';
@@ -21,6 +22,7 @@ const Main = ({ children }: any) => {
       })
         .then((response) => response.json())
         .then((data) => {
+          saveToLocalStorage('me', data);
           console.log('API response:', data);
         })
         .catch((error) => {
