@@ -1,12 +1,15 @@
 'use client';
 
-import { BarChart2, ScrollText, LineChart, Menu } from 'lucide-react';
+import { BarChart2, ScrollText, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { ModeToggle } from '@/shared/ModeToggle/ui/ModeToggle';
 import { AuthModal } from '@/widgets/Auth/ui/AuthModal';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getFromLocalStorage } from '@/shared/localStorageMove';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 export const HeaderMobile = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,6 +24,13 @@ export const HeaderMobile = () => {
     router.push(url);
     setIsOpen(false);
   };
+
+  const item = localStorage.getItem('me') as string;
+
+  const newItem = JSON.parse(item);
+
+  const fallBack =
+    newItem?.first_name?.split('')[0] + newItem?.last_name?.split('')[0];
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -49,19 +59,20 @@ export const HeaderMobile = () => {
               <ScrollText className="h-5 w-5" />
               Вакансии
             </div>
-            <div
-              className="mx-[-0.65rem] cursor-pointer  flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-              onClick={() => handleClose('/analytics')}
-            >
-              <LineChart className="h-5 w-5" />
-              Аналитика
-            </div>
           </nav>
         </SheetContent>
       </Sheet>
       <div className="flex w-full flex-1 items-center justify-end gap-4">
         <ModeToggle />
-        <AuthModal />
+        {!!newItem?.first_name ? (
+          <Link href={'/profile'}>
+            <Avatar>
+              <AvatarFallback>{fallBack}</AvatarFallback>
+            </Avatar>
+          </Link>
+        ) : (
+          <AuthModal />
+        )}
       </div>
     </header>
   );
