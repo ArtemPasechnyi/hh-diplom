@@ -173,8 +173,10 @@ const VacanciesList = () => {
       {!!data.length ? (
         <div className="flex flex-col gap-6">
           <div>
-            <div>{`amount: ${value}, valueWithSalary: ${valueWithSalary}`}</div>
-            <div>{`avgSalary: ${avgSalary}`}</div>
+            <div>{`Количесто: ${value}, Вакансии с зарплатой: ${valueWithSalary}`}</div>
+            <div
+              style={{ marginBottom: '20px' }}
+            >{`Средняя зарплата: ${avgSalary}`}</div>
             {skills.length && <Chart options={chartOptions} />}
           </div>
           <div className="h-calc-screen overflow-y-scroll flex flex-col gap-6">
