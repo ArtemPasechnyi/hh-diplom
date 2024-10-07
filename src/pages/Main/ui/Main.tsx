@@ -23,7 +23,6 @@ const Main = ({ children }: any) => {
         .then((response) => response.json())
         .then((data) => {
           saveToLocalStorage('me', data);
-          console.log('API response:', data);
         })
         .catch((error) => {
           console.error('Error fetching API data:', error);
@@ -48,7 +47,7 @@ const Main = ({ children }: any) => {
             })
               .then((response) => response.json())
               .then((data) => {
-                console.log('API response:', data);
+                saveToLocalStorage('me', data);
               })
               .catch((error) => {
                 console.error('Error fetching API data:', error);

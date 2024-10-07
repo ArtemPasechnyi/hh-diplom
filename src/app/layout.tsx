@@ -3,8 +3,8 @@ import '@/styles/globals.css';
 import { cn } from '@/lib/utils';
 import { Source_Code_Pro as SourceCodePro } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+
 import Main from '@/pages/Main/ui/Main';
-// import 'https://code.highcharts.com/dashboards/css/dashboards.css';
 import Head from 'next/head';
 
 const fontSans = SourceCodePro({

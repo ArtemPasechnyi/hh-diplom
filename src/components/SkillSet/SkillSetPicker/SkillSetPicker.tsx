@@ -1,19 +1,24 @@
-import { Autocomplete, TextField } from "@mui/material";
-import { useSkillSet } from "../useSkillSet";
-import { SyntheticEvent, useEffect } from "react";
+import { useSkillSet } from '../useSkillSet';
+import { useEffect } from 'react';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export type SkillSet = {
   name: string;
   skills: string[];
 };
 
-const predefinedSkills = [];
-
 const predefinedSkillSets: SkillSet[] = [];
 
 const getSkillSets = () => {
-  if (typeof window !== "undefined") {
-    const customSkillSets = localStorage.getItem("customSkillSets");
+  if (typeof window !== 'undefined') {
+    const customSkillSets = localStorage.getItem('customSkillSets');
     const parsedCustomSkillSets: SkillSet[] = customSkillSets
       ? JSON.parse(customSkillSets)
       : [];
@@ -28,32 +33,29 @@ export const SkillSetPicker = () => {
 
   const skillSets = getSkillSets();
 
+  const handleChange = (value: string) => {
+    const selectedSkillSet = skillSets.find((set) => set.name === value);
+    setSkillSet(selectedSkillSet || null);
+  };
+
   useEffect(() => {
     setSkillSet(skillSets[0]);
-    console.log("really?");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(skillSet);
-
   return (
-    <Autocomplete<SkillSet>
-      options={skillSets}
-      onChange={(_, newValue: SkillSet | null) => {
-        console.log(newValue);
-        setSkillSet(newValue);
-      }}
-      renderOption={(props, option) => {
-        return (
-          <li {...props} key={option.name}>
-            {option.name}
-          </li>
-        );
-      }}
-      getOptionLabel={(option) => option.name}
-      isOptionEqualToValue={(option, value) => option.name === value.name}
-      value={skillSet}
-      renderInput={(params) => <TextField {...params} label="Скиллсет" />}
-    />
+    <Select value={skillSet?.name || ''} onValueChange={handleChange}>
+      <SelectTrigger>
+        <SelectValue placeholder={(skillSet?.name as any) || 'Выберите сет'} />
+      </SelectTrigger>
+      <SelectContent>
+        {skillSets.map((item, index) => {
+          return (
+            <SelectItem key={index} value={item.name}>
+              {item.name}
+            </SelectItem>
+          );
+        })}
+      </SelectContent>
+    </Select>
   );
 };

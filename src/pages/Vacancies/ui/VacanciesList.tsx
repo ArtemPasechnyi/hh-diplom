@@ -148,14 +148,12 @@ const VacanciesList = () => {
     },
   };
 
-  console.log(
-    skills.map(({ name, percentage }: any) => {
-      return { type: 'bar', name, data: [percentage] };
-    })
-  );
-
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex gap-4">
+        <SkillSetPicker />
+        <SkillSetAdder />
+      </div>
       <div className={styles.search}>
         <Input
           name="name"
@@ -174,10 +172,6 @@ const VacanciesList = () => {
         >
           <MagnifyingGlassIcon className="h-4 w-4" />
         </Button>
-      </div>
-      <div className="flex gap-4">
-        <SkillSetPicker />
-        <SkillSetAdder />
       </div>
 
       {!!data.length ? (
