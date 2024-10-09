@@ -14,6 +14,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { XIcon } from 'lucide-react';
 
 export const SkillSetAdder = () => {
   const [_, setIsOpen] = useState<boolean>(false);
@@ -38,18 +40,41 @@ export const SkillSetAdder = () => {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div>
+            <Label>Название</Label>
             <Input
               value={name}
               onChange={(event) => {
                 setName(event.currentTarget.value);
               }}
             />
-            <div>
-              <div>
+            <div style={{ marginTop: '20px' }}>
+              <ul style={{ listStyleType: 'circle', paddingLeft: '20px' }}>
                 {skills.map((skill, index) => {
-                  return <div key={skill + index}>{skill}</div>;
+                  return (
+                    <li
+                      key={skill + index}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginBottom: '8px',
+                      }}
+                    >
+                      <span style={{ marginRight: '8px' }}>{skill}</span>
+                      <Button
+                        onClick={() => {
+                          setSkills((prevState) => {
+                            return prevState.filter((_, i) => i !== index);
+                          });
+                        }}
+                        style={{ marginLeft: 'auto' }}
+                      >
+                        <XIcon className="h-4 w-4" />
+                      </Button>
+                    </li>
+                  );
                 })}
-              </div>
+              </ul>
+              <Label>Параметр</Label>
               <div style={{ display: 'flex' }}>
                 <Input
                   value={newSkillName}
@@ -63,7 +88,9 @@ export const SkillSetAdder = () => {
                       return [...prevState, newSkillName];
                     });
                     setNewSkillName('');
+                    setIsOpen(false);
                   }}
+                  style={{ marginLeft: '12px' }}
                 >
                   <PlusIcon />
                 </Button>

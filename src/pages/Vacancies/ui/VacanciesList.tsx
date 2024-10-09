@@ -11,6 +11,7 @@ import { SkillSetPicker } from '@/components/SkillSet/SkillSetPicker/SkillSetPic
 import { useSkillSet } from '@/components/SkillSet/useSkillSet';
 import { SkillSetAdder } from '@/components/SkillSet/SkillSetAdder/SkillSetAdder';
 import { Chart } from '@/shared/Chart/Chart';
+import { Label } from '@/components/ui/label';
 
 const VacanciesList = () => {
   const [data, setData] = useState<any>([]);
@@ -150,6 +151,7 @@ const VacanciesList = () => {
 
   return (
     <div className="flex flex-col gap-6">
+      <Label>СкиллСет</Label>
       <div className="flex gap-4">
         <SkillSetPicker />
         <SkillSetAdder />
